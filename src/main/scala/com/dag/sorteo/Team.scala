@@ -1,5 +1,5 @@
 package com.dag.sorteo
 
-class Team (code: String, name: String) {
+class Team (val code: Int, val name: String) {
 
 }

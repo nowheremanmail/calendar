@@ -1,5 +1,5 @@
 package com.dag.sorteo
 
-class Match (home: Team, visitor: Team) {
+class Match (val home: Team, val visitor: Team) {
 
 }
