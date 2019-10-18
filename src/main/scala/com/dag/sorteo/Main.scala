@@ -28,12 +28,13 @@ class Calendar {
       c.cal(i)(j) = cal(i)(j)
     };
 
-    c.cal(m.home.code)(m.visitor.code) = d;
+    c.cal(m.home.code-1)(m.visitor.code-1) = d;
     c.N = N + 1;
     return c;
   }
 
-  def print(): Unit = {
+  override def toString(): String = {
+    var res = ""
     for {
       i <- 0 until 20
     } {
@@ -41,15 +42,17 @@ class Calendar {
         j <- 0 until 20
       } {
         if (i != j) {
-          printf(" %2d ", cal(i)(j))
+          val cel = cal(i)(j)
+          res += f" $cel%2d "
         }
         else {
-          printf("    ")
+          res += "    "
         }
       }
-      println()
+      res += "\n"
     }
-    println()
+    res += "\n"
+    res
   }
 }
 
@@ -61,33 +64,35 @@ object Main {
       calculate(matches, c, days)
       return;
     }
-    if (fixturesMatches.isEmpty )return;
+    if (fixturesMatches.isEmpty) return;
+
+    println (s"Calculating day ${day} step ${value}")
 
     fixturesMatches.foreach(a => {
-      calculateFixtures(fixturesMatches
-        .filter(b => a != b)
-        .filter(b => b.visitor != a.home && b.home != a.home )
-        , c.newWith(day, a), day, value-1, matches.filter(b => a != b), days)
+      val possibleFixturesMatches = fixturesMatches.filter(b => b.compatibleOnFixture(a));
+
+      calculateFixtures(possibleFixturesMatches, c.newWith(day, a), day, value - 1, matches.filter(b => a != b), days)
     });
 
   }
 
   def calculate(matches: List[Match], c: Calendar, days: List[Int]): Unit = {
-    // take 10
 
     if (matches.isEmpty) {
       if (c.isFinished()) {
-        c.print();
+        println (c);
       }
+      println ("no more matches")
       return;
     }
 
+    println (s"Calculating day ${days.head}")
     calculateFixtures(matches, c, days.head, 10, matches, days.tail)
 
   }
 
   def main(args: Array[String]): Unit = {
-    val teams = (0 until 20).map { i => new Team(i, i + "") }
+    val teams = (1 to 20).map { i => new Team(i, s"team $i") }
     val days = (1 to 38).toList
     val matches = teams.flatMap(a => teams.filter(c => c != a).map(b => new Match(a, b))).toList
 
