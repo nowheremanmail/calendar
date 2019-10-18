@@ -1,8 +1,6 @@
 package com.dag.sorteo
 
-class Calendar {
-
-
+class Calendar(val teams : IndexedSeq[Team]) {
   val cal = Array.ofDim[Int](20, 20);
   var N = 0;
 
@@ -19,7 +17,7 @@ class Calendar {
   def IsAllFixtures(): Boolean = (N > 0 && N % 10 == 0);
 
   def newWith(d: Int, m: Match): Calendar = {
-    val c = new Calendar;
+    val c = new Calendar(teams);
 
     for {
       i <- 0 until 20
@@ -28,7 +26,7 @@ class Calendar {
       c.cal(i)(j) = cal(i)(j)
     };
 
-    c.cal(m.home.code-1)(m.visitor.code-1) = d;
+    c.cal(m.home.code - 1)(m.visitor.code - 1) = d;
     c.N = N + 1;
     return c;
   }
@@ -54,6 +52,57 @@ class Calendar {
     res += "\n"
     res
   }
+
+  def checkCalendar() = {
+
+    var T = 0
+    var fixtures = Array.ofDim[Set[Int]](38)
+    for {
+      i <- 0 until 38} {
+      fixtures(i) = Set()
+    }
+
+    for {
+      i <- 0 until 20
+      j <- 0 until 20
+    } {
+      if (i != j) {
+        T += 1
+        fixtures(cal(i)(j) - 1) = fixtures(cal(i)(j) - 1) + (i + 1)
+        fixtures(cal(i)(j) - 1) = fixtures(cal(i)(j) - 1) + (j + 1)
+      }
+    }
+
+    if (T != N) throw new RuntimeException("Invalid N")
+
+    for {
+      i <- 0 until 38} {
+      if (fixtures(i).size != 20) throw new RuntimeException("Invalid fixture " + (i+1))
+    }
+  }
+
+  def seeFixtures() = {
+
+    var fixtures = Array.ofDim[Set[String]](38)
+    for {
+      i <- 0 until 38} {
+      fixtures(i) = Set()
+    }
+
+    for {
+      i <- 0 until 20
+      j <- 0 until 20
+    } {
+      if (i != j) {
+        fixtures(cal(i)(j) - 1) = fixtures(cal(i)(j) - 1) + f"${teams(i).name} - ${teams(j).name}"
+      }
+    }
+    for {
+      i <- 0 until 38} {
+      println(i + " " + fixtures(i))
+    }
+  }
+
 }
 
 object Main {
@@ -61,34 +110,46 @@ object Main {
   def calculateFixtures(fixturesMatches: List[Match], c: Calendar, day: Int, value: Int, matches: List[Match], days: List[Int]): Unit = {
 
     if (value == 0) {
+      //println(s"Calculating day ${day} step ${value} , next")
       calculate(matches, c, days)
       return;
     }
-    if (fixturesMatches.isEmpty) return;
 
-    println (s"Calculating day ${day} step ${value}")
+    if (fixturesMatches.isEmpty || fixturesMatches.length < value || differentsTeams(fixturesMatches) < value * 2) {
+      //println(s"Calculating day ${day} step ${value} , break")
+      return
+    };
 
+    //println(s"Calculating day ${day} step ${value}")
     fixturesMatches.foreach(a => {
       val possibleFixturesMatches = fixturesMatches.filter(b => b.compatibleOnFixture(a));
-
       calculateFixtures(possibleFixturesMatches, c.newWith(day, a), day, value - 1, matches.filter(b => a != b), days)
-    });
 
+    });
   }
+
+  def differentsTeams(matches: List[Match]) =
+    matches.flatMap(a => Set(a.home.code, a.visitor.code)).length
 
   def calculate(matches: List[Match], c: Calendar, days: List[Int]): Unit = {
 
     if (matches.isEmpty) {
-      if (c.isFinished()) {
-        println (c);
+      if (c.isFull()) {
+        c.checkCalendar()
+        //println(c);
+
+        c.seeFixtures()
+
       }
-      println ("no more matches")
+      else {
+        //println("no more matches, pull")
+      }
       return;
     }
 
-    println (s"Calculating day ${days.head}")
-    calculateFixtures(matches, c, days.head, 10, matches, days.tail)
+    println(s"Calculating day ${days.head}")
 
+    calculateFixtures(matches, c, days.head, 10, matches, days.tail)
   }
 
   def main(args: Array[String]): Unit = {
@@ -96,8 +157,6 @@ object Main {
     val days = (1 to 38).toList
     val matches = teams.flatMap(a => teams.filter(c => c != a).map(b => new Match(a, b))).toList
 
-    val c = new Calendar;
-    calculate(matches, c, days);
-
+    calculate(scala.util.Random.shuffle(matches), new Calendar(teams), days);
   }
 }
