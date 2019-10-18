@@ -1,12 +1,22 @@
 package com.dag.sorteo
 
 class Calendar {
-  val cal = Array.ofDim[Int](20, 20);
 
-  for {
-    i <- 0 until 20
-    j <- 0 until 20
-  } cal(i)(j) = 0;
+
+  val cal = Array.ofDim[Int](20, 20);
+  var N = 0;
+
+  /*
+    for {
+      i <- 0 until 20
+      j <- 0 until 20
+    } cal(i)(j) = 0;
+  */
+  def isFull(): Boolean = (N == 20 * 20 - 20);
+
+  def isFinished(): Boolean = (N == (20 * 20 - 20) / 2);
+
+  def IsAllFixtures(): Boolean = (N > 0 && N % 10 == 0);
 
   def newWith(d: Int, m: Match): Calendar = {
     val c = new Calendar;
@@ -14,40 +24,66 @@ class Calendar {
     for {
       i <- 0 until 20
       j <- 0 until 20
-    } c.cal(i)(j) = cal(i)(j);
+    } {
+      c.cal(i)(j) = cal(i)(j)
+    };
 
     c.cal(m.home.code)(m.visitor.code) = d;
+    c.N = N + 1;
     return c;
   }
 
   def print(): Unit = {
     for {
       i <- 0 until 20
-      j <- 0 until 20
+    } {
+      for {
+        j <- 0 until 20
+      } {
+        if (i != j) {
+          printf(" %2d ", cal(i)(j))
+        }
+        else {
+          printf("    ")
+        }
+      }
+      println()
     }
-      if (i != j)
-        println(s"($i)($j) = ${cal(i)(j)}")
+    println()
   }
 }
 
 object Main {
 
-  def calculate(matches: List[Match], days: List[Int], c: Calendar, count: Int): Unit = {
+  def calculateFixtures(fixturesMatches: List[Match], c: Calendar, day: Int, value: Int, matches: List[Match], days: List[Int]): Unit = {
+
+    if (value == 0) {
+      calculate(matches, c, days)
+      return;
+    }
+    if (fixturesMatches.isEmpty )return;
+
+    fixturesMatches.foreach(a => {
+      calculateFixtures(fixturesMatches
+        .filter(b => a != b)
+        .filter(b => b.visitor != a.home && b.home != a.home )
+        , c.newWith(day, a), day, value-1, matches.filter(b => a != b), days)
+    });
+
+  }
+
+  def calculate(matches: List[Match], c: Calendar, days: List[Int]): Unit = {
     // take 10
 
-    if (count > 0 && count % 10 == 0) {
-      if (days.length <= 1) {
+    if (matches.isEmpty) {
+      if (c.isFinished()) {
         c.print();
-        return;
       }
+      return;
+    }
 
-      calculate(matches, days.tail, c, count);
-    }
-    else {
-      matches.foreach(a => {
-        calculate(matches.filter(b => a != b), days, c.newWith(days.head, a), count + 1)
-      });
-    }
+    calculateFixtures(matches, c, days.head, 10, matches, days.tail)
+
   }
 
   def main(args: Array[String]): Unit = {
@@ -56,7 +92,7 @@ object Main {
     val matches = teams.flatMap(a => teams.filter(c => c != a).map(b => new Match(a, b))).toList
 
     val c = new Calendar;
-    calculate(matches, days, c, 0);
+    calculate(matches, c, days);
 
   }
 }
