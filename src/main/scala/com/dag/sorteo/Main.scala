@@ -41,7 +41,6 @@ object Main {
     }
   }
 
-
   def distinctTeams(matches: List[Match]) = matches.flatMap(a => Set(a.home.code, a.visitor.code)).length
 
   def calculate(matches: List[Match], c: Calendar, days: List[Int]): List[Operation] = {
@@ -59,22 +58,24 @@ object Main {
     }
     else {
       println(s"Calculating day ${days.head}")
-
-      List(CalculateFixtures(matches, c, days.head, 10, matches, days.tail))
+      val mm = Utils.shuffle(matches)
+      val dd = Utils.shuffle(days)
+      val day = dd.head
+      List(CalculateFixtures(mm.filter(c.rulesDaily(_, day)), c, day, 10, mm, dd.tail))
     }
   }
 
 
   def main(args: Array[String]): Unit = {
-    val teams = List("ALA", "ATH", "ATM", "BAR", "CEL", "EIB", "ESP", "GET", "GRA", "LEG", "LEV", "MAL", "OSA", "BET", "RMA", "RSO", "SEV", "VAL", "VLL", "VIL")
-      .zipWithIndex.map { case (a, i) => new Team(i + 1, a) }
+    val c = new Calendar
+    val teams = c.teams.zipWithIndex.map { case (a, i) => new Team(i + 1, a) }
     val days = (1 to 38).toList
     val matches = teams.flatMap(a => teams.filter(c => c != a).map(b => new Match(a, b))).toList
 
     //calculate(matches, new Calendar(teams), days);
     val stack = mutable.Queue[Any]()
 
-    stack += Calculate(Utils.shuffle(matches), new Calendar(teams), Utils.shuffle(days));
+    stack += Calculate(matches, c, days);
 
     while (!stack.isEmpty) {
       val current = stack.dequeue()

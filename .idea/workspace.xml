@@ -206,7 +206,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="scala-line">
           <url>file://$PROJECT_DIR$/src/main/scala/com/dag/sorteo/Main.scala</url>
-          <line>49</line>
+          <line>48</line>
           <option name="timeStamp" value="72" />
         </line-breakpoint>
       </breakpoints>

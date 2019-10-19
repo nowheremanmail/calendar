@@ -16,15 +16,13 @@ object MainRecursive {
     }
 
     //println(s"Calculating day ${day} step ${value}")
-
     val mm = fixturesMatches.zipWithIndex
     mm.foreach(a => {
       val possibleFixturesMatches = mm
         .filter(b => b._2 > a._2).map(b => b._1)
         .filter(b => b.compatibleOnFixture(a._1))
         .filter(c.rules(a._1, day))
-      val allRemainMatches = matches
-        .filter(b => a._1 != b)
+      val allRemainMatches = matches.filter(b => a._1 != b)
       val cc = c.newWith(day, a._1)
 
       calculateFixtures(possibleFixturesMatches, cc, day, value - 1, allRemainMatches, days)

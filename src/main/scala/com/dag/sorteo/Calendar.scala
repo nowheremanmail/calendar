@@ -110,7 +110,7 @@ class Calendar {
     */
   }
 
-  val UCL = Set("FCB", "ATM", "RMA", "VAL")
+  val UCL = Set("BAR", "ATM", "RMA", "VAL")
   val UEL = Set("SEV", "GET", "ESP")
 
   def rulesDaily(a: Match, day: Int) = {
