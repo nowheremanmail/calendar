@@ -2,8 +2,9 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/laliga.iml" filepath="$PROJECT_DIR$/.idea/modules/laliga.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/laliga-build.iml" filepath="$PROJECT_DIR$/.idea/modules/laliga-build.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/fixtures.iml" filepath="$PROJECT_DIR$/.idea/modules/fixtures.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/fixtures.main.iml" filepath="$PROJECT_DIR$/.idea/modules/fixtures.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/fixtures.test.iml" filepath="$PROJECT_DIR$/.idea/modules/fixtures.test.iml" />
     </modules>
   </component>
 </project>

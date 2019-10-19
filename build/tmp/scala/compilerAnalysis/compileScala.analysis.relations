@@ -1,0 +1,40 @@
+products:
+   C:\Users\david\IdeaProjects\calendar\src\main\scala\com\dag\sorteo\Calendar.scala -> C:\Users\david\IdeaProjects\calendar\build\classes\scala\main\com\dag\sorteo\Calendar.class
+   C:\Users\david\IdeaProjects\calendar\src\main\scala\com\dag\sorteo\JsonUtil.scala -> C:\Users\david\IdeaProjects\calendar\build\classes\scala\main\com\dag\sorteo\JsonUtil$$anon$1.class
+   C:\Users\david\IdeaProjects\calendar\src\main\scala\com\dag\sorteo\JsonUtil.scala -> C:\Users\david\IdeaProjects\calendar\build\classes\scala\main\com\dag\sorteo\JsonUtil$.class
+   C:\Users\david\IdeaProjects\calendar\src\main\scala\com\dag\sorteo\JsonUtil.scala -> C:\Users\david\IdeaProjects\calendar\build\classes\scala\main\com\dag\sorteo\JsonUtil.class
+   C:\Users\david\IdeaProjects\calendar\src\main\scala\com\dag\sorteo\Main.scala -> C:\Users\david\IdeaProjects\calendar\build\classes\scala\main\com\dag\sorteo\Cache$.class
+   C:\Users\david\IdeaProjects\calendar\src\main\scala\com\dag\sorteo\Main.scala -> C:\Users\david\IdeaProjects\calendar\build\classes\scala\main\com\dag\sorteo\Cache.class
+   C:\Users\david\IdeaProjects\calendar\src\main\scala\com\dag\sorteo\Main.scala -> C:\Users\david\IdeaProjects\calendar\build\classes\scala\main\com\dag\sorteo\Main$.class
+   C:\Users\david\IdeaProjects\calendar\src\main\scala\com\dag\sorteo\Main.scala -> C:\Users\david\IdeaProjects\calendar\build\classes\scala\main\com\dag\sorteo\Main.class
+   C:\Users\david\IdeaProjects\calendar\src\main\scala\com\dag\sorteo\Match.scala -> C:\Users\david\IdeaProjects\calendar\build\classes\scala\main\com\dag\sorteo\Match.class
+   C:\Users\david\IdeaProjects\calendar\src\main\scala\com\dag\sorteo\Team.scala -> C:\Users\david\IdeaProjects\calendar\build\classes\scala\main\com\dag\sorteo\Team.class
+binary dependencies:
+   C:\Users\david\IdeaProjects\calendar\src\main\scala\com\dag\sorteo\Calendar.scala -> C:\Users\david\.gradle\caches\modules-2\files-2.1\org.scala-lang\scala-library\2.13.1\1418c956704990564fb9dfac5960647ca54b5a91\scala-library-2.13.1.jar
+   C:\Users\david\IdeaProjects\calendar\src\main\scala\com\dag\sorteo\JsonUtil.scala -> C:\Users\david\.gradle\caches\modules-2\files-2.1\com.fasterxml.jackson.core\jackson-databind\2.10.0\1127c9cf62f2bb3121a3a2a0a1351d251a602117\jackson-databind-2.10.0.jar
+   C:\Users\david\IdeaProjects\calendar\src\main\scala\com\dag\sorteo\JsonUtil.scala -> C:\Users\david\.gradle\caches\modules-2\files-2.1\com.fasterxml.jackson.module\jackson-module-scala_2.13\2.10.0\ee3fe78bd5e88a046fe3f8bffc73f4f3143dfa7d\jackson-module-scala_2.13-2.10.0.jar
+   C:\Users\david\IdeaProjects\calendar\src\main\scala\com\dag\sorteo\JsonUtil.scala -> C:\Users\david\.gradle\caches\modules-2\files-2.1\org.scala-lang\scala-library\2.13.1\1418c956704990564fb9dfac5960647ca54b5a91\scala-library-2.13.1.jar
+   C:\Users\david\IdeaProjects\calendar\src\main\scala\com\dag\sorteo\Main.scala -> C:\Users\david\.gradle\caches\modules-2\files-2.1\org.scala-lang\scala-library\2.13.1\1418c956704990564fb9dfac5960647ca54b5a91\scala-library-2.13.1.jar
+   C:\Users\david\IdeaProjects\calendar\src\main\scala\com\dag\sorteo\Match.scala -> C:\Users\david\.gradle\caches\modules-2\files-2.1\org.scala-lang\scala-library\2.13.1\1418c956704990564fb9dfac5960647ca54b5a91\scala-library-2.13.1.jar
+   C:\Users\david\IdeaProjects\calendar\src\main\scala\com\dag\sorteo\Team.scala -> C:\Users\david\.gradle\caches\modules-2\files-2.1\org.scala-lang\scala-library\2.13.1\1418c956704990564fb9dfac5960647ca54b5a91\scala-library-2.13.1.jar
+source dependencies:
+   C:\Users\david\IdeaProjects\calendar\src\main\scala\com\dag\sorteo\Calendar.scala -> C:\Users\david\IdeaProjects\calendar\src\main\scala\com\dag\sorteo\JsonUtil.scala
+   C:\Users\david\IdeaProjects\calendar\src\main\scala\com\dag\sorteo\Calendar.scala -> C:\Users\david\IdeaProjects\calendar\src\main\scala\com\dag\sorteo\Main.scala
+   C:\Users\david\IdeaProjects\calendar\src\main\scala\com\dag\sorteo\Calendar.scala -> C:\Users\david\IdeaProjects\calendar\src\main\scala\com\dag\sorteo\Match.scala
+   C:\Users\david\IdeaProjects\calendar\src\main\scala\com\dag\sorteo\Calendar.scala -> C:\Users\david\IdeaProjects\calendar\src\main\scala\com\dag\sorteo\Team.scala
+   C:\Users\david\IdeaProjects\calendar\src\main\scala\com\dag\sorteo\Main.scala -> C:\Users\david\IdeaProjects\calendar\src\main\scala\com\dag\sorteo\Calendar.scala
+   C:\Users\david\IdeaProjects\calendar\src\main\scala\com\dag\sorteo\Main.scala -> C:\Users\david\IdeaProjects\calendar\src\main\scala\com\dag\sorteo\Match.scala
+   C:\Users\david\IdeaProjects\calendar\src\main\scala\com\dag\sorteo\Main.scala -> C:\Users\david\IdeaProjects\calendar\src\main\scala\com\dag\sorteo\Team.scala
+   C:\Users\david\IdeaProjects\calendar\src\main\scala\com\dag\sorteo\Match.scala -> C:\Users\david\IdeaProjects\calendar\src\main\scala\com\dag\sorteo\Team.scala
+external dependencies:
+class names:
+   C:\Users\david\IdeaProjects\calendar\src\main\scala\com\dag\sorteo\Calendar.scala -> com.dag.sorteo.Calendar
+   C:\Users\david\IdeaProjects\calendar\src\main\scala\com\dag\sorteo\JsonUtil.scala -> com.dag.sorteo.JsonUtil
+   C:\Users\david\IdeaProjects\calendar\src\main\scala\com\dag\sorteo\JsonUtil.scala -> com.dag.sorteo.JsonUtil$
+   C:\Users\david\IdeaProjects\calendar\src\main\scala\com\dag\sorteo\JsonUtil.scala -> com.dag.sorteo.JsonUtil$$anon$1
+   C:\Users\david\IdeaProjects\calendar\src\main\scala\com\dag\sorteo\Main.scala -> com.dag.sorteo.Cache
+   C:\Users\david\IdeaProjects\calendar\src\main\scala\com\dag\sorteo\Main.scala -> com.dag.sorteo.Cache$
+   C:\Users\david\IdeaProjects\calendar\src\main\scala\com\dag\sorteo\Main.scala -> com.dag.sorteo.Main
+   C:\Users\david\IdeaProjects\calendar\src\main\scala\com\dag\sorteo\Main.scala -> com.dag.sorteo.Main$
+   C:\Users\david\IdeaProjects\calendar\src\main\scala\com\dag\sorteo\Match.scala -> com.dag.sorteo.Match
+   C:\Users\david\IdeaProjects\calendar\src\main\scala\com\dag\sorteo\Team.scala -> com.dag.sorteo.Team
