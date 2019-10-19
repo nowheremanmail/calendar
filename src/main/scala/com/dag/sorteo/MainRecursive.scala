@@ -51,16 +51,16 @@ object MainRecursive {
       val mm = Utils.shuffle(matches)
       val dd = Utils.shuffle(days)
       val day = dd.head
-      calculateFixtures(mm.filter(c.rulesDaily(_,day)), c, day, 10, mm, dd.tail)
+      calculateFixtures(mm.filter(c.rulesDaily(_, day)), c, day, 10, mm, dd.tail)
     }
   }
 
   def main(args: Array[String]): Unit = {
-    val teams = List("ALA", "ATH", "ATM", "BAR", "CEL", "EIB", "ESP", "GET", "GRA", "LEG", "LEV", "MAL", "OSA", "BET", "RMA", "RSO", "SEV", "VAL", "VLL", "VIL")
-      .zipWithIndex.map { case (a, i) => new Team(i + 1, a) }
+    val c = new Calendar
+    val teams = c.teams.zipWithIndex.map { case (a, i) => new Team(i + 1, a) }
     val days = (1 to 38).toList
     val matches = teams.flatMap(a => teams.filter(c => c != a).map(b => new Match(a, b))).toList
 
-    calculate(matches, new Calendar(teams), days);
+    calculate(matches, c, days)
   }
 }

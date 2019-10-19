@@ -1,13 +1,14 @@
 package com.dag.sorteo
 
-class Calendar(val teams: List[Team]) {
-  val cal = Array.ofDim[Int](20, 20);
-  var N = 0;
+class Calendar {
+  val teams = List("ALA", "ATH", "ATM", "BAR", "CEL", "EIB", "ESP", "GET", "GRA", "LEG", "LEV", "MAL", "OSA", "BET", "RMA", "RSO", "SEV", "VAL", "VLL", "VIL")
+  val cal = Array.ofDim[Int](20, 20)
+  var N = 0
 
-  def isFull: Boolean = (N == 20 * 20 - 20);
+  def isFull: Boolean = (N == 20 * 20 - 20)
 
   def newWith(d: Int, m: Match): Calendar = {
-    val c = new Calendar(teams);
+    val c = new Calendar;
 
     for {
       i <- 0 until 20
@@ -16,12 +17,10 @@ class Calendar(val teams: List[Team]) {
       c.cal(i)(j) = cal(i)(j)
     };
 
-    c.cal(m.home.code - 1)(m.visitor.code - 1) = d;
-    c.N = N + 1;
-
+    c.cal(m.home.code - 1)(m.visitor.code - 1) = d
+    c.N = N + 1
     //println(s"set - ${m.home} - ${m.visitor} = ${d}")
-
-    return c;
+    c
   }
 
   override def toString(): String = {
@@ -88,7 +87,7 @@ class Calendar(val teams: List[Team]) {
       j <- 0 until 20
     } {
       if (i != j) {
-        fixtures(cal(i)(j) - 1) = fixtures(cal(i)(j) - 1) + f"${teams(i).name}-${teams(j).name}"
+        fixtures(cal(i)(j) - 1) = fixtures(cal(i)(j) - 1) + f"${teams(i)}-${teams(j)}"
       }
     }
 
