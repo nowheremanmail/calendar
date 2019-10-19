@@ -88,7 +88,7 @@ class Calendar(val teams: List[Team]) {
       j <- 0 until 20
     } {
       if (i != j) {
-        fixtures(cal(i)(j) - 1) = fixtures(cal(i)(j) - 1) + f"${teams(i).name} - ${teams(j).name}"
+        fixtures(cal(i)(j) - 1) = fixtures(cal(i)(j) - 1) + f"${teams(i).name}-${teams(j).name}"
       }
     }
 
@@ -111,4 +111,35 @@ class Calendar(val teams: List[Team]) {
     */
   }
 
+  val UCL = Set("FCB", "ATM", "RMA", "VAL")
+  val UEL = Set("SEV", "GET", "ESP")
+
+  def rulesDaily(a: Match, day: Int) = {
+    if (Set(25, 28, 31, 34).contains(day)) {
+      !((UCL.contains(a.home.name) && UEL(a.visitor.name))
+        || (UEL.contains(a.home.name) && UCL(a.visitor.name))
+        || UCL.contains(a.home.name) && UCL(a.visitor.name))
+    }
+    else if (a.home.name == "GRA") {
+      day != 4
+    } else if (a.home.name == "ATH") {
+      day != 38
+    } else if (a.home.name == "ESP") {
+      day != 10
+    } else /*if (a.home.name == "FCB") {
+      day != 10
+    } else*/ {
+      true
+    }
+  }
+
+  def rules(a: Match, day: Int) = (b: Match) => {
+    (a.home.name, b.home.name) match {
+      case ("RMA", "ATM") => !Set(19).contains(day)
+      case ("FCB", "ESP") => !Set(1, 2, 3).contains(day)
+      case ("BET", "SEV") => Set(1, 2, 3, 18, 19).contains(day)
+      case ("VAL", "LEV") => Set(9).contains(day) && !Set(1, 2, 3, 18, 19).contains(day)
+      case _ => true
+    }
+  }
 }
