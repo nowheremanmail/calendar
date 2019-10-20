@@ -1,7 +1,10 @@
 package com.dag.sorteo
 
+import java.io.{File, FileOutputStream, PrintWriter}
+
 object MainRecursive {
   var M = 0
+  val writer = new PrintWriter(new FileOutputStream(new File("calendars.txt" ), true))
 
   def calculateFixtures(fixturesMatches: List[Match], c: Calendar, day: Int, value: Int, matches: List[Match], days: List[Int]): Unit = {
     if (value == 0) {
@@ -36,9 +39,20 @@ object MainRecursive {
     if (matches.isEmpty) {
       if (c.isFull) {
         M = M + 1
+
         c.checkCalendar()
-        //println(c);
-        c.seeFixtures(M)
+        val fixtures = c.getFixtures
+        val msg = JsonUtil.toJson(fixtures)
+        println(">>>>" + M + " " + msg);
+        if (Cache.previous.contains(msg)) {
+          throw new RuntimeException("REPEAT!")
+        }
+        else {
+          Cache.previous.add(msg)
+        }
+        writer.append(msg)
+        writer.append("\n")
+        writer.flush()
       }
       else {
         //println("no more matches, pull")

@@ -1,5 +1,7 @@
 package com.dag.sorteo
 
+import java.io.{File, PrintWriter}
+
 class Calendar {
   val teams = List("ALA", "ATH", "ATM", "BAR", "CEL", "EIB", "ESP", "GET", "GRA", "LEG", "LEV", "MAL", "OSA", "BET", "RMA", "RSO", "SEV", "VAL", "VLL", "VIL")
   val cal = Array.ofDim[Int](20, 20)
@@ -74,7 +76,7 @@ class Calendar {
   }
 
 
-  def seeFixtures(M: Int) = {
+  def getFixtures = {
 
     var fixtures = Array.ofDim[Set[String]](38)
     for {
@@ -91,51 +93,44 @@ class Calendar {
       }
     }
 
-    val msg = JsonUtil.toJson(fixtures)
-
-    if (Cache.previous.contains(msg)) {
-      throw new RuntimeException("REPEAT!")
-    }
-    else {
-      Cache.previous.add(msg)
-    }
-
-    println(">>>>" + M + " " + msg);
-
-    /*
-        for {
-          i <- 0 until 38} {
-          println(i + " " + fixtures(i))
-        }
-    */
+    fixtures
   }
 
   val UCL = Set("BAR", "ATM", "RMA", "VAL")
   val UEL = Set("SEV", "GET", "ESP")
 
   def rulesDaily(a: Match, day: Int) = {
-    if (Set(25, 28, 31, 34).contains(day)) {
-      !((UCL.contains(a.home.name) && UEL(a.visitor.name))
-        || (UEL.contains(a.home.name) && UCL(a.visitor.name))
-        || UCL.contains(a.home.name) && UCL(a.visitor.name))
+  // TODO not more than 2 days as local ???
+    val previousMatchDay = cal (a.visitor.code-1)(a.home.code-1)
+    // if already play on previous half wait until next half  (19 - 19)
+    // previous match and next not against same team
+    if (previousMatchDay> 0 && ((previousMatchDay <= 19 && day <= 19) || (previousMatchDay > 19 && day > 19) || Math.abs(previousMatchDay-day) <= 2)) {
+      false
     }
-    else if (a.home.name == "GRA") {
-      day != 4
-    } else if (a.home.name == "ATH") {
-      day != 38
-    } else if (a.home.name == "ESP") {
-      day != 10
-    } else /*if (a.home.name == "FCB") {
+    else {
+      if (Set(25, 28, 31, 34).contains(day)) {
+        !((UCL.contains(a.home.name) && UEL(a.visitor.name))
+          || (UEL.contains(a.home.name) && UCL(a.visitor.name))
+          || UCL.contains(a.home.name) && UCL(a.visitor.name))
+      }
+      else if (a.home.name == "GRA") {
+        day != 4
+      } else if (a.home.name == "ATH") {
+        day != 38
+      } else if (a.home.name == "ESP") {
+        day != 10
+      } else /*if (a.home.name == "BAR") {
       day != 10
     } else*/ {
-      true
+        true
+      }
     }
   }
 
   def rules(a: Match, day: Int) = (b: Match) => {
     (a.home.name, b.home.name) match {
       case ("RMA", "ATM") => !Set(19).contains(day)
-      case ("FCB", "ESP") => !Set(1, 2, 3).contains(day)
+      case ("BAR", "ESP") => !Set(1, 2, 3).contains(day)
       case ("BET", "SEV") => Set(1, 2, 3, 18, 19).contains(day)
       case ("VAL", "LEV") => Set(9).contains(day) && !Set(1, 2, 3, 18, 19).contains(day)
       case _ => true

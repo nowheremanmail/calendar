@@ -1,6 +1,9 @@
 package com.dag.sorteo
 
+import java.io.{File, PrintWriter}
 import java.security.SecureRandom
+
+import com.dag.sorteo.MainRecursive.writer
 
 import scala.collection.mutable.ArrayBuffer
 import scala.collection.{BuildFrom, mutable}
@@ -42,14 +45,24 @@ object Main {
   }
 
   def distinctTeams(matches: List[Match]) = matches.flatMap(a => Set(a.home.code, a.visitor.code)).length
+  val writer = new PrintWriter(new File("calendars.txt" ))
 
   def calculate(matches: List[Match], c: Calendar, days: List[Int]): List[Operation] = {
     if (matches.isEmpty) {
       if (c.isFull) {
         M = M + 1
         c.checkCalendar()
-        //println(c);
-        c.seeFixtures(M)
+        val fixtures = c.getFixtures
+        val msg = JsonUtil.toJson(fixtures)
+        println(">>>>" + M + " " + msg);
+        if (Cache.previous.contains(msg)) {
+          throw new RuntimeException("REPEAT!")
+        }
+        else {
+          Cache.previous.add(msg)
+        }
+        writer.println(msg)
+        writer.flush()
       }
       else {
         //println("no more matches, pull")
