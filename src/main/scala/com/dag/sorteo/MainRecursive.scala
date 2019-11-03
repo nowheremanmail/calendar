@@ -59,11 +59,13 @@ object MainRecursive {
       }
     }
     else {
-      println(s"Calculating day ${days.head}")
       val mm = Utils.shuffle(matches)
-      val dd = Utils.shuffle(days)
-      val day = dd.head
-      calculateFixtures(mm.filter(c.rulesDaily(_, day)), c, day, 10, mm, dd.tail)
+      // order days in order of number of possible options
+      // we will start with days with less possible matches
+      val sortedDaysByComplexity = Utils.shuffle(days).map(day => (day , mm.filter(c.rulesDaily(_, day)))).sortBy(a=>a._2.size)
+      val dayData = sortedDaysByComplexity.head
+      println(s"Calculating day ${dayData._1}")
+      calculateFixtures(dayData._2, c, dayData._1, 10, mm, sortedDaysByComplexity.tail.map(a=>a._1))
     }
   }
 
